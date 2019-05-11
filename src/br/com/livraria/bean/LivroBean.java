@@ -68,7 +68,15 @@ public class LivroBean {
 		}
 	}
 	
+	public String formAutor() {
+		System.out.println("Chamando a página autor.xhtml");
+		return "autor?faces-redirect=true";
+	}
 	
+	public String formLivro() {
+		System.out.println("Chamando a página livro.xhtml");
+		return "livro?faces-redirect=true";
+	}
 	
 	
 
