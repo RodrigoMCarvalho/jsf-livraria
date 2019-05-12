@@ -2,12 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head />  <!-- Para que o JSF importe o código JavaScript necessário. -->
-<h:body>
-	<h1>Novo Livro</h1>
-	<h:form>
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">Novo Livro</ui:define>
+	<ui:define name="conteudo">
+	<h:form>	
 		<h:messages id="messages"/>
 		<fieldset>
 			<legend>Dados do Livro</legend>
@@ -29,16 +30,19 @@
 				<h:inputText id="dataLancamento" value="#{livroBean.livro.dataLancamento.time}" >
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 				</h:inputText>
+				
 			</h:panelGrid>
 		</fieldset>
 		
 		<fieldset>
 			<legend>Dados do Autor</legend>
 			<h:outputLabel value="Selecione um autor: " for="autor"/>
+			
 			<h:selectOneMenu value="#{livroBean.autorId}" id="autor">
 				<f:selectItems value="#{livroBean.autores}" 
 					var="autor" itemLabel="#{autor.nome}" itemValue="#{autor.id}"/>
 			</h:selectOneMenu>
+			
 			<h:commandButton value="Gravar Autor" action="#{livroBean.gravarAutor()}">
 				<f:ajax execute="autor" render="tabelaAutores"/>
 			</h:commandButton>
@@ -47,7 +51,6 @@
 			<h:commandLink value="Cadastrar novo autor" action="#{livroBean.formAutor}" immediate="true"/> 
 			
 			<h:dataTable value="#{livroBean.autoresDoLivro}" var="autor" id="tabelaAutores">
-		
 				<h:column>
 					<h:outputText value="#{autor.nome}" />
 				</h:column>
@@ -81,6 +84,7 @@
 			</h:column>
 		</h:dataTable>
 	</h:form>
-</h:body>
+	</ui:define>
+</ui:composition>
 
 </html>
