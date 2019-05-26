@@ -57,8 +57,24 @@ public class LivroBean {
 			//throw new RuntimeException("Livro deve ter pelo menos um Autor.");
 			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
 		}
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if (this.livro.getId() == null) {
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		} else {
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
 		livro = new Livro();
+	}
+	
+	public void remover(Livro livro) {
+		new DAO<Livro>(Livro.class).remove(livro);
+	}
+	
+	public void removerAutorDoLivro(Autor autor) {
+		this.livro.removerAutor(autor);
+	}
+	
+	public void alterar(Livro livro) {
+		this.livro = livro; //livro atributo recebe o parâmetro livro
 	}
 	
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object obj)throws ValidatorException {
