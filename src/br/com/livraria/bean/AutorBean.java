@@ -13,6 +13,8 @@ import br.com.livraria.modelo.Autor;
 public class AutorBean {
 
 	private Autor autor = new Autor();
+	
+	private Integer autorId;
 
 	public Autor getAutor() {
 		return autor;
@@ -21,6 +23,14 @@ public class AutorBean {
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	} 
+
+	public Integer getAutorId() {
+		return autorId;
+	}
+
+	public void setAutorId(Integer autorId) {
+		this.autorId = autorId;
+	}
 
 	public void gravar() {
 		System.out.println("Gravando autor " + this.autor.getNome() + " ID: " + this.autor.getId());
@@ -39,7 +49,17 @@ public class AutorBean {
 	
 	public void carregar(Autor autor) {
 		this.autor = autor;
-		
 		System.out.println(autor.getId() + "Nome: " + autor.getNome());
 	}
+	
+	public void carregarAutorPorId () {
+		this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

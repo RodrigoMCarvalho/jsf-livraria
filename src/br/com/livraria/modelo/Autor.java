@@ -11,6 +11,8 @@ public class Autor {
 	@GeneratedValue
 	private Integer id;
 	
+	private String email;
+	
 	private String nome;
 
 	public String getNome() {
@@ -19,6 +21,14 @@ public class Autor {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 
 	public Integer getId() {
