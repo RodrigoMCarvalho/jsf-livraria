@@ -2,6 +2,7 @@ package br.com.livraria.bean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.livraria.dao.UsuarioDAO;
 import br.com.livraria.modelo.Usuario;
@@ -21,6 +22,8 @@ public class LoginBean {
 		
 		boolean existe = new UsuarioDAO().existe(usuario);
 		if (existe) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}
 		return null;
