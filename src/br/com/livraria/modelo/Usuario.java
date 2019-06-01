@@ -11,8 +11,17 @@ public class Usuario {
 	@GeneratedValue
 	private Integer id;
 	
+	private String nome;
 	private String email;
 	private String senha;
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	public String getSenha() {
 		return senha;

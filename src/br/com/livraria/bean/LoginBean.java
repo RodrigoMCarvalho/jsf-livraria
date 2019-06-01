@@ -1,5 +1,6 @@
 package br.com.livraria.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -19,14 +20,24 @@ public class LoginBean {
 	
 	public String efetuarLogin() {
 		System.out.println("Efetando o login do usuário " + this.usuario.getEmail());
+		FacesContext context = FacesContext.getCurrentInstance();
 		
-		boolean existe = new UsuarioDAO().existe(usuario);
-		if (existe) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
+		Usuario UsuarioExiste = new UsuarioDAO().existe(usuario);
+		if (UsuarioExiste != null) {
+			
+			context.getExternalContext().getSessionMap().put("usuarioLogado", UsuarioExiste);
 			return "livro?faces-redirect=true";
+		} else {
+		context.getExternalContext().getFlash().setKeepMessages(true);; //dura duas requisições devido ao "faces-redirect"
+		context.addMessage(null, new FacesMessage("Usuário e/ou senha inválidos"));
 		}
-		return null;
+		return "login?faces-redirect=true";
+	}
+	
+	public String deslogar() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("usuarioLogado");
+		return "login?faces-redirect=true";
 	}
 	
 	

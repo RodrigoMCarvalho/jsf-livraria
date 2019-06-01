@@ -8,7 +8,9 @@ import br.com.livraria.modelo.Usuario;
 
 public class UsuarioDAO {
 
-	public boolean existe(Usuario usuario) {
+	public Usuario existe(Usuario usuario) {
+		
+		Usuario resultado = new Usuario();
 		EntityManager em = new JPAUtil().getEntityManager();
 		TypedQuery<Usuario> query = em.createQuery("select u from Usuario u "
 				+ "	where u.email = :pEmail and u.senha = :pSenha", Usuario.class);
@@ -16,13 +18,14 @@ public class UsuarioDAO {
 		query.setParameter("pSenha", usuario.getSenha());
 		
 		try {
-		Usuario resultado = query.getSingleResult();
-		} catch (NoResultException e) {
-			return false;
+			resultado = query.getSingleResult();
+		} catch (NoResultException erro) {
+			erro.printStackTrace();
+			return null;
 		}
 		em.close();
 
-		return true;  //retorna null se não existir
+		return resultado;  
 	}
 
 }
